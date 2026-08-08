@@ -439,6 +439,50 @@
   }
   .map-btns a:hover{ border-color:var(--ink); }
 
+  /* ---------- transit ---------- */
+  .transit-tabs{
+    display:flex;
+    margin-top:38px;
+    border-bottom:1px solid var(--line);
+  }
+  .t-tab{
+    flex:1;
+    background:none;
+    border:none;
+    padding:12px 0;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.1em;
+    color:var(--ink-soft);
+    cursor:pointer;
+    border-bottom:1px solid transparent;
+    margin-bottom:-1px;
+  }
+  .t-tab.active{ color:var(--ink); border-bottom-color:var(--ink); }
+  .transit-panels{ margin-top:22px; text-align:left; }
+  .t-panel{ display:none; }
+  .t-panel.active{ display:block; animation:fadeIn 0.35s ease; }
+  @keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
+  .t-line{
+    display:flex;
+    gap:14px;
+    padding:8px 0;
+    font-size:13px;
+    line-height:1.8;
+  }
+  .t-key{
+    flex:0 0 52px;
+    color:var(--pine);
+    font-weight:500;
+    letter-spacing:0.04em;
+  }
+  .t-val{ color:var(--ink-soft); flex:1; }
+  .t-note{
+    margin-top:12px;
+    font-size:10.5px;
+    color:#B4655A;
+  }
+
   /* ---------- accordion ---------- */
   .acc{
     border-top:1px solid var(--line);
@@ -491,22 +535,39 @@
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:11px 0;
+    padding:15px 0;
     font-size:12.5px;
     color:var(--ink-soft);
+    border-bottom:1px solid rgba(43,42,38,0.06);
   }
-  .account-row .who{ color:var(--ink); font-weight:500; }
+  .account-row:last-of-type{ border-bottom:none; }
+  .acct-info{ text-align:left; }
+  .acct-who{
+    font-size:10.5px;
+    letter-spacing:0.16em;
+    color:var(--gold);
+    margin-bottom:6px;
+  }
+  .acct-num{
+    font-size:13.5px;
+    color:var(--ink);
+    font-weight:500;
+    letter-spacing:0.02em;
+  }
+  .acct-name{ font-size:11.5px; color:var(--ink-soft); margin-top:3px; }
   .copy-btn{
+    flex:0 0 auto;
+    margin-left:14px;
+    padding:8px 15px;
+    border:1px solid var(--line);
     background:none;
-    border:none;
-    font-size:11px;
-    color:var(--pine);
-    letter-spacing:0.04em;
+    font-size:11.5px;
+    color:var(--ink);
+    letter-spacing:0.06em;
     cursor:pointer;
-    text-decoration:underline;
-    text-underline-offset:3px;
     font-family:'Noto Sans KR', sans-serif;
   }
+  .copy-btn:hover{ border-color:var(--ink); background:var(--ink); color:var(--ivory); }
 
   /* ---------- closing ---------- */
   .closing{
@@ -600,6 +661,296 @@
     font-family:'Cormorant Garamond', serif;
     font-size:14px;
     letter-spacing:0.3em;
+  }
+
+
+  /* ---------- RSVP ---------- */
+  .rsvp-inline{
+    text-align:center;
+    padding-top:8px;
+  }
+  .rsvp-inline-btn{
+    display:inline-block;
+    padding:13px 30px;
+    border:1px solid var(--ink);
+    background:none;
+    color:var(--ink);
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    cursor:pointer;
+  }
+  .rsvp-inline-btn:hover{ background:var(--ink); color:var(--ivory); }
+
+  .sheet-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(20,19,17,0.5);
+    z-index:60;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.3s ease;
+  }
+  .sheet-backdrop.open{ opacity:1; pointer-events:auto; }
+
+  .sheet{
+    position:fixed;
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%) translateY(100%);
+    width:100%;
+    max-width:480px;
+    background:var(--ivory);
+    z-index:61;
+    border-radius:18px 18px 0 0;
+    padding:30px 28px 34px;
+    max-height:88vh;
+    overflow-y:auto;
+    transition:transform 0.38s cubic-bezier(0.32,0.72,0,1);
+    box-shadow:0 -6px 30px rgba(0,0,0,0.14);
+  }
+  .sheet.open{ transform:translateX(-50%) translateY(0); }
+
+  .sheet-close{
+    position:absolute;
+    top:18px;
+    right:20px;
+    background:none;
+    border:none;
+    font-family:'Cormorant Garamond', serif;
+    font-size:24px;
+    line-height:1;
+    color:var(--ink-soft);
+    cursor:pointer;
+    padding:6px;
+  }
+  .sheet-title{
+    text-align:center;
+    font-family:'Noto Serif KR', serif;
+    font-size:17px;
+    font-weight:500;
+    letter-spacing:0.14em;
+    margin-bottom:24px;
+  }
+  .sheet-icon{
+    width:44px; height:44px;
+    margin:0 auto 20px;
+    display:block;
+  }
+  .sheet-icon svg{ width:100%; height:100%; }
+  .sheet-lead{
+    text-align:center;
+    font-size:13.5px;
+    line-height:2;
+    color:var(--ink-soft);
+    font-weight:300;
+  }
+  .sheet-facts{
+    margin:26px 0 4px;
+    padding:20px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .fact-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:7px 0;
+    font-size:13px;
+    color:var(--ink);
+  }
+  .fact-row .ico{
+    flex:0 0 16px;
+    color:var(--pine-soft);
+    display:flex;
+    align-items:center;
+  }
+  .fact-row .ico svg{ width:15px; height:15px; }
+  .sheet-actions{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:22px;
+    gap:12px;
+  }
+  .later-btn{
+    background:none;
+    border:none;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    text-decoration:underline;
+    text-underline-offset:3px;
+    padding:8px 0;
+    white-space:nowrap;
+  }
+  .primary-btn{
+    padding:13px 26px;
+    background:var(--ink);
+    color:var(--ivory);
+    border:none;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.1em;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+
+  /* form */
+  .field{ margin-bottom:26px; }
+  .field-label{
+    font-size:12px;
+    letter-spacing:0.1em;
+    color:var(--ink);
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .field-label .req{ color:#B4655A; font-size:11px; }
+  .choice-row{ display:flex; gap:10px; }
+  .choice{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding:14px 15px;
+    border:1px solid var(--line);
+    background:none;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:13px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    text-align:left;
+  }
+  .choice .dot{
+    flex:0 0 17px;
+    width:17px; height:17px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .choice .dot svg{ width:9px; height:9px; opacity:0; }
+  .choice.on{
+    border-color:var(--ink);
+    color:var(--ink);
+    background:rgba(255,255,255,0.5);
+  }
+  .choice.on .dot{ background:var(--ink); border-color:var(--ink); }
+  .choice.on .dot svg{ opacity:1; }
+
+  .text-input{
+    width:100%;
+    padding:11px 2px;
+    border:none;
+    border-bottom:1px solid var(--line);
+    background:none;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:14px;
+    color:var(--ink);
+    outline:none;
+  }
+  .text-input:focus{ border-bottom-color:var(--ink); }
+  .text-input::placeholder{ color:#b6b1a6; }
+
+  .side-toggle{ display:flex; gap:18px; }
+  .side-opt{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:none;
+    border:none;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:13px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    padding:0;
+  }
+  .side-opt .dot{
+    width:16px; height:16px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .side-opt .dot svg{ width:8px; height:8px; opacity:0; }
+  .side-opt.on{ color:var(--ink); }
+  .side-opt.on .dot{ background:var(--ink); border-color:var(--ink); }
+  .side-opt.on .dot svg{ opacity:1; }
+
+  .stepper{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border:1px solid var(--line);
+    padding:9px 14px;
+  }
+  .stepper button{
+    width:28px; height:28px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:none;
+    color:var(--ink);
+    font-size:15px;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .stepper button:hover{ border-color:var(--ink); }
+  .stepper .count{
+    font-family:'Cormorant Garamond', serif;
+    font-size:19px;
+    color:var(--ink);
+  }
+  .field-hint{
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-top:8px;
+    line-height:1.7;
+  }
+  .submit-btn{
+    width:100%;
+    padding:16px 0;
+    background:var(--ink);
+    color:var(--ivory);
+    border:none;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:13px;
+    letter-spacing:0.16em;
+    cursor:pointer;
+    margin-top:8px;
+  }
+  .submit-btn:disabled{ opacity:0.5; cursor:default; }
+  .form-note{
+    font-size:10.5px;
+    color:var(--ink-soft);
+    text-align:center;
+    margin-top:14px;
+    line-height:1.8;
+  }
+  .rsvp-done{
+    text-align:center;
+    padding:28px 0 10px;
+  }
+  .rsvp-done .check{
+    width:46px; height:46px;
+    margin:0 auto 20px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .rsvp-done .check svg{ width:20px; height:20px; }
+  .rsvp-done p{
+    font-size:14px;
+    line-height:2;
+    color:var(--ink);
   }
 
   /* ---------- toast ---------- */
@@ -784,6 +1135,34 @@
       <a id="naverMap" href="#" target="_blank" rel="noopener">네이버 지도</a>
       <a id="kakaoMap" href="#" target="_blank" rel="noopener">카카오맵</a>
     </div>
+
+    <div class="transit-tabs">
+      <button class="t-tab active" onclick="showTransit(0, this)">지하철</button>
+      <button class="t-tab" onclick="showTransit(1, this)">자가용</button>
+      <button class="t-tab" onclick="showTransit(2, this)">버스</button>
+    </div>
+
+    <div class="transit-panels">
+      <div class="t-panel active">
+        <div class="t-line"><span class="t-key">2호선</span><span class="t-val">을지로입구역 7·8번 출구 도보 3분</span></div>
+        <div class="t-line"><span class="t-key">1호선</span><span class="t-val">시청역 6번 출구 도보 7분</span></div>
+        <div class="t-note">※ 안내 문구를 알려주시면 이 내용으로 교체해 드립니다.</div>
+      </div>
+      <div class="t-panel">
+        <div class="t-line"><span class="t-key">내비</span><span class="t-val">&lsquo;롯데호텔 서울&rsquo; 검색</span></div>
+        <div class="t-line"><span class="t-key">주차</span><span class="t-val">호텔 주차장 이용 (추후 안내)</span></div>
+        <div class="t-note">※ 안내 문구를 알려주시면 이 내용으로 교체해 드립니다.</div>
+      </div>
+      <div class="t-panel">
+        <div class="t-line"><span class="t-key">정류장</span><span class="t-val">롯데백화점·우리은행 본점 하차</span></div>
+        <div class="t-line"><span class="t-key">노선</span><span class="t-val">추후 안내</span></div>
+        <div class="t-note">※ 안내 문구를 알려주시면 이 내용으로 교체해 드립니다.</div>
+      </div>
+    </div>
+
+    <div class="rsvp-inline">
+      <button class="rsvp-inline-btn" onclick="openRsvpForm()">참석의사 전달하기</button>
+    </div>
   </section>
 
   <div class="divider reveal"><span class="l"></span><span class="d"></span><span class="l"></span></div>
@@ -820,14 +1199,21 @@
       <div class="acc-body">
         <div class="acc-body-inner">
           <div class="account-row">
-            <div><span class="who">신랑측</span> 000은행 000-000-000000 신상우</div>
-            <button class="copy-btn" onclick="copyAccount('000-000-000000')">복사</button>
+            <div class="acct-info">
+              <div class="acct-who">신랑측</div>
+              <div class="acct-num">신한은행 110-400-570471</div>
+              <div class="acct-name">예금주 신상우</div>
+            </div>
+            <button class="copy-btn" onclick="copyAccount('신한은행 110-400-570471 신상우')">복사</button>
           </div>
           <div class="account-row">
-            <div><span class="who">신부측</span> 000은행 000-000-000000 백은정</div>
-            <button class="copy-btn" onclick="copyAccount('000-000-000000')">복사</button>
+            <div class="acct-info">
+              <div class="acct-who">신부측</div>
+              <div class="acct-num">우리은행 1002-646-535334</div>
+              <div class="acct-name">예금주 백은정</div>
+            </div>
+            <button class="copy-btn" onclick="copyAccount('우리은행 1002-646-535334 백은정')">복사</button>
           </div>
-          <div class="edit-note">* 실제 계좌번호로 교체해 주세요</div>
         </div>
       </div>
     </div>
@@ -848,6 +1234,116 @@
     <button onclick="shareInvite()">청첩장 공유하기</button>
   </div>
 
+</div>
+
+<!-- 참석 의사 안내 배너 -->
+<div class="sheet-backdrop" id="bannerBackdrop" onclick="closeBanner()"></div>
+<div class="sheet" id="bannerSheet" role="dialog" aria-label="참석 의사 전달 안내">
+  <button class="sheet-close" onclick="closeBanner()" aria-label="닫기">&times;</button>
+  <div class="sheet-icon">
+    <svg viewBox="0 0 44 44" fill="none">
+      <circle cx="17" cy="16" r="6" stroke="#7C8873" stroke-width="1.2"/>
+      <path d="M7 35c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="#7C8873" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="30" cy="18" r="5" stroke="#B69A61" stroke-width="1.2"/>
+      <path d="M22 35c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#B69A61" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M32 12.5 L34 14.5 L38 10" stroke="#B69A61" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="sheet-title">참석 의사 전달</div>
+  <div class="sheet-lead">
+    귀한 걸음 해주시는 분들을<br>
+    소홀함 없이 맞이할 수 있도록,<br>
+    아래의 &lsquo;참석의사 전달하기&rsquo;를 눌러<br>
+    회신해 주시면 감사하겠습니다.
+  </div>
+  <div class="sheet-facts">
+    <div class="fact-row">
+      <span class="ico"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3.5" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M2 7h12M5.5 1.8v3M10.5 1.8v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg></span>
+      2026.10.18 (일) 낮 12시 00분
+    </div>
+    <div class="fact-row">
+      <span class="ico"><svg viewBox="0 0 16 16" fill="none"><path d="M2 14V6.8L8 2l6 4.8V14" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><path d="M6.2 14V9.5h3.6V14" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></span>
+      롯데호텔 서울 36F 벨뷰스위트
+    </div>
+    <div class="fact-row">
+      <span class="ico"><svg viewBox="0 0 16 16" fill="none"><path d="M8 14.5s5-4.6 5-8a5 5 0 1 0-10 0c0 3.4 5 8 5 8Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><circle cx="8" cy="6.4" r="1.8" stroke="currentColor" stroke-width="1.1"/></svg></span>
+      서울 중구 을지로 30
+    </div>
+  </div>
+  <div class="sheet-actions">
+    <button class="later-btn" onclick="hideBannerToday()">오늘 하루 보지 않기</button>
+    <button class="primary-btn" onclick="openRsvpForm()">참석의사 전달하기</button>
+  </div>
+</div>
+
+<!-- 참석 의사 입력 폼 -->
+<div class="sheet-backdrop" id="formBackdrop" onclick="closeRsvpForm()"></div>
+<div class="sheet" id="formSheet" role="dialog" aria-label="참석 의사 입력">
+  <button class="sheet-close" onclick="closeRsvpForm()" aria-label="닫기">&times;</button>
+  <div class="sheet-title">참석 의사 전달</div>
+
+  <div id="rsvpFormBody">
+    <div class="sheet-lead" style="margin-bottom:30px;">
+      원활한 예식 진행을 위해 참석 정보를<br>
+      미리 알려주시면 감사하겠습니다.
+    </div>
+
+    <div class="field">
+      <div class="choice-row">
+        <button class="choice on" id="attYes" onclick="setAttend(true)">
+          <span>참석 가능</span><span class="dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.3 L4.7 9 L10 3" stroke="#FAF7F1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button class="choice" id="attNo" onclick="setAttend(false)">
+          <span>참석 불가</span><span class="dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.3 L4.7 9 L10 3" stroke="#FAF7F1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">성함 <span class="req">*</span></div>
+      <div style="display:flex; align-items:flex-end; gap:16px;">
+        <input class="text-input" id="rsvpName" type="text" placeholder="성함을 입력해 주세요" maxlength="20">
+      </div>
+      <div class="side-toggle" style="margin-top:16px;">
+        <button class="side-opt on" id="sideG" onclick="setSide('신랑측')">
+          <span class="dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.3 L4.7 9 L10 3" stroke="#FAF7F1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>신랑측</span>
+        </button>
+        <button class="side-opt" id="sideB" onclick="setSide('신부측')">
+          <span class="dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.3 L4.7 9 L10 3" stroke="#FAF7F1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>신부측</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="field" id="guestField">
+      <div class="field-label">동반 인원 <span class="req">*</span></div>
+      <div class="stepper">
+        <button onclick="stepGuest(-1)" aria-label="줄이기">&minus;</button>
+        <span class="count" id="guestCount">0</span>
+        <button onclick="stepGuest(1)" aria-label="늘리기">+</button>
+      </div>
+      <div class="field-hint">본인을 제외하고 함께 오시는 분의 수를 알려주세요.</div>
+    </div>
+
+    <div class="field" id="mealField">
+      <div class="field-label">식사 여부 <span class="req">*</span></div>
+      <div class="choice-row">
+        <button class="choice on" id="mealYes" onclick="setMeal(true)">
+          <span>식사함</span><span class="dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.3 L4.7 9 L10 3" stroke="#FAF7F1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button class="choice" id="mealNo" onclick="setMeal(false)">
+          <span>식사 안함</span><span class="dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.3 L4.7 9 L10 3" stroke="#FAF7F1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">전달 사항</div>
+      <input class="text-input" id="rsvpMemo" type="text" placeholder="전달하실 내용을 입력해 주세요 (최대 30자)" maxlength="30">
+    </div>
+
+    <button class="submit-btn" id="rsvpSubmit" onclick="submitRsvp()">전달하기</button>
+    <div class="form-note">전달해 주신 정보는 예식 준비 목적으로만 사용됩니다.</div>
+  </div>
 </div>
 
 <div class="lightbox" id="lightbox">
@@ -885,7 +1381,7 @@
   updateDday();
 
   // map links
-  const venueQuery = encodeURIComponent('롯데호텔서울 소공동');
+  const venueQuery = encodeURIComponent('롯데호텔 서울');
   document.getElementById('naverMap').href = 'https://map.naver.com/p/search/' + venueQuery;
   document.getElementById('kakaoMap').href = 'https://map.kakao.com/link/search/' + venueQuery;
 
@@ -1023,6 +1519,138 @@
     if(e.key === 'ArrowLeft') moveLb(-1);
     if(e.key === 'ArrowRight') moveLb(1);
   });
+
+  // ---------- 교통편 탭 ----------
+  function showTransit(i, btn){
+    document.querySelectorAll('.t-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.t-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.t-panel')[i].classList.add('active');
+  }
+
+  // ---------- 참석 의사(RSVP) ----------
+  // ★ 응답을 구글 시트로 모으려면 아래에 Apps Script 웹앱 주소를 붙여넣으세요.
+  const RSVP_ENDPOINT = '';
+
+  const rsvp = { attend:true, side:'신랑측', guests:0, meal:true };
+
+  function safeStore(key, val){
+    try{ if(val === undefined) return localStorage.getItem(key); localStorage.setItem(key, val); }
+    catch(e){ return null; }
+  }
+
+  // 배너: 페이지 진입 후 잠시 뒤 노출 (오늘 숨김 처리된 경우 제외)
+  function maybeShowBanner(){
+    const today = new Date().toDateString();
+    if(safeStore('rsvpBannerHidden') === today) return;
+    if(safeStore('rsvpSubmitted') === 'yes') return;
+    setTimeout(openBanner, 1800);
+  }
+  function openBanner(){
+    document.getElementById('bannerBackdrop').classList.add('open');
+    document.getElementById('bannerSheet').classList.add('open');
+  }
+  function closeBanner(){
+    document.getElementById('bannerBackdrop').classList.remove('open');
+    document.getElementById('bannerSheet').classList.remove('open');
+  }
+  function hideBannerToday(){
+    safeStore('rsvpBannerHidden', new Date().toDateString());
+    closeBanner();
+  }
+
+  function openRsvpForm(){
+    closeBanner();
+    document.getElementById('formBackdrop').classList.add('open');
+    document.getElementById('formSheet').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeRsvpForm(){
+    document.getElementById('formBackdrop').classList.remove('open');
+    document.getElementById('formSheet').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function setAttend(v){
+    rsvp.attend = v;
+    document.getElementById('attYes').classList.toggle('on', v);
+    document.getElementById('attNo').classList.toggle('on', !v);
+    // 불참 시 인원/식사 항목 숨김
+    document.getElementById('guestField').style.display = v ? '' : 'none';
+    document.getElementById('mealField').style.display = v ? '' : 'none';
+  }
+  function setSide(s){
+    rsvp.side = s;
+    document.getElementById('sideG').classList.toggle('on', s === '신랑측');
+    document.getElementById('sideB').classList.toggle('on', s === '신부측');
+  }
+  function stepGuest(d){
+    rsvp.guests = Math.max(0, Math.min(20, rsvp.guests + d));
+    document.getElementById('guestCount').textContent = rsvp.guests;
+  }
+  function setMeal(v){
+    rsvp.meal = v;
+    document.getElementById('mealYes').classList.toggle('on', v);
+    document.getElementById('mealNo').classList.toggle('on', !v);
+  }
+
+  function submitRsvp(){
+    const name = document.getElementById('rsvpName').value.trim();
+    if(!name){
+      showToast('성함을 입력해 주세요');
+      document.getElementById('rsvpName').focus();
+      return;
+    }
+    const payload = {
+      제출시각: new Date().toLocaleString('ko-KR'),
+      구분: rsvp.side,
+      성함: name,
+      참석여부: rsvp.attend ? '참석' : '불참',
+      동반인원: rsvp.attend ? rsvp.guests : 0,
+      총인원: rsvp.attend ? rsvp.guests + 1 : 0,
+      식사여부: rsvp.attend ? (rsvp.meal ? '식사함' : '식사안함') : '-',
+      전달사항: document.getElementById('rsvpMemo').value.trim()
+    };
+
+    const btn = document.getElementById('rsvpSubmit');
+    btn.disabled = true;
+    btn.textContent = '전달 중...';
+
+    const finish = ()=>{
+      safeStore('rsvpSubmitted', 'yes');
+      document.getElementById('rsvpFormBody').innerHTML =
+        '<div class="rsvp-done">' +
+        '<div class="check"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5 L8.2 14.6 L16 6.5" stroke="#B69A61" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
+        '<p>참석 의사가 전달되었습니다.<br>소중한 마음 감사합니다.</p>' +
+        '</div>';
+      setTimeout(closeRsvpForm, 2200);
+    };
+
+    if(RSVP_ENDPOINT){
+      fetch(RSVP_ENDPOINT, {
+        method:'POST',
+        mode:'no-cors',
+        headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).then(finish).catch(()=>{
+        btn.disabled = false;
+        btn.textContent = '전달하기';
+        showToast('전송에 실패했습니다. 다시 시도해 주세요');
+      });
+    } else {
+      // 아직 시트가 연결되지 않은 경우: 문자로 전달할 수 있게 안내
+      console.log('RSVP:', payload);
+      finish();
+    }
+  }
+
+  document.addEventListener('keydown', e=>{
+    if(e.key !== 'Escape') return;
+    if(document.getElementById('formSheet').classList.contains('open')) closeRsvpForm();
+    else if(document.getElementById('bannerSheet').classList.contains('open')) closeBanner();
+  });
+
+  maybeShowBanner();
 </script>
 </body>
 </html>
